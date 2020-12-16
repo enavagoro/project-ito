@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>enterprises</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="principal-container">
+    <div class="list-container">
+      <h1>!borrados</h1>
+      <ion-item *ngFor="let enterprise of enterprises;index as i" (click)="deleteEnterprise(i)">{{enterprise.nombre}}</ion-item>
+    </div>
+  </div>
+
+  <div class="principal-container">
+    <div class="list-container">
+      <h1>borrados</h1>
+      <ion-item *ngFor="let enterprise of enterprisesDeletes;index as i">{{enterprise.nombre}}</ion-item>
+    </div>
+  </div>
+</ion-content>
