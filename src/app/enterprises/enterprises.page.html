@@ -1,21 +1,40 @@
 <ion-header>
+  <ion-toolbar class="ion-toolbar">    
+  </ion-toolbar>
   <ion-toolbar>
-    <ion-title>enterprises</ion-title>
+    aquí van a ir los filtros
   </ion-toolbar>
 </ion-header>
-
+<!--<ion-title>enterprises</ion-title>-->
 <ion-content>
-  <div class="principal-container">
-    <div class="list-container">
-      <h1>!borrados</h1>
-      <ion-item *ngFor="let enterprise of enterprises;index as i" (click)="deleteEnterprise(i)">{{enterprise.nombre}}</ion-item>
+  <div class="principal-container"> <!-- esta etiqueta sirve para definir una etiqueta general por sobre la etiqueta content -->
+    <h1 class="list-title">{{listTitleEnterprise}}</h1>
+    <div class="cards-container">
+      <div class="card-container" *ngFor="let enterprise of enterprises">
+        <div class="card" (click)="presentActionSheet()">
+            <ion-item>
+              <h1 class="card-title">{{enterprise.nombre}}</h1>
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <div class="image-card-container">
+              <ion-avatar>
+                <img src="https://www.flaticon.com/svg/static/icons/svg/3393/3393650.svg">
+              </ion-avatar>
+            </div>
+          <h1 class="card-title">Juan Pedro</h1>
+          <h1 class="card-subtitle">{{enterprise.direccion}}</h1>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="principal-container">
-    <div class="list-container">
-      <h1>borrados</h1>
-      <ion-item *ngFor="let enterprise of enterprisesDeletes;index as i">{{enterprise.nombre}}</ion-item>
-    </div>
-  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+
