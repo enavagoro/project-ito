@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-enterprises',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnterprisesPage implements OnInit {
   enterprises = [];
-  enterprisesDeletes = [];
+  listTitleEnterprise = 'Lista de Empresas';
 
-  constructor() { }
+  constructor(public actionSheetController: ActionSheetController,
+              private router: Router) { }
 
   ngOnInit() {
     this.enterprises = [
@@ -17,46 +20,56 @@ export class EnterprisesPage implements OnInit {
       {nombre:'empresa2',direccion:5}, //[1]
       {nombre:'empresa3',direccion:'estamos'} //[2]
     ];
-
-    /*
-    this.test('aqui');
-    this.test(0);
-    this.test(this.enterprises);
-    this.test(1 + 1);
-    this.test('hola');
-    
-    var variableCualquiera = this.otroFuncion('cacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-    this.test(variableCualquiera);
-    
-    /* for con nombred
-    for(let enterprise of this.enterprises){
-      console.log(enterprise.direccion);
-    }
-    */
-
-/* FOR NORMAL
-    console.log('Largo del arreglo',this.enterprises.length);
-
-    for(let i=0; i<this.enterprises.length; i++){
-      console.log('Valor de I:',i);
-      console.log('enterpise[',i,']:',this.enterprises[i]);
-    }
-  */  
-  }//aqui termina el ngOnInit
-
-
-/*
-  otroFuncion(parametro){
-    console.log('este el parametro que entra a la otroFUncion::',parametro);
-    parametro = 'chao';
-    console.log('este el parametro que sale de la otroFUncion::',parametro);
-    return parametro
   }
-*/
+
+  displayEnterpriseOptions(enterprise){
+    console.log(enterprise);
+  }
 
   deleteEnterprise(x){
-    this.enterprisesDeletes.push(this.enterprises[x]);
-    this.enterprises.splice(x, 1);
   }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Opciones',
+      cssClass: 'my-custom-class',
+      buttons: [
+      {
+        text: 'Ingresar',
+        icon: 'eye',
+        handler: () => {
+          
+        }
+      },{
+        text: 'Editar',
+        icon: 'pencil',
+        handler: () => {
+          this.navigateToEnterprise();
+        }
+      },{
+        text: 'Desactivar',
+        icon: 'trash',
+        handler: () => {
+          
+        }
+      },{
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
+  navigateToEnterprise(/*form*/){
+    //this.dataStorage.set(form);
+    this.router.navigateByUrl("enterprises/enterprise");
+    //this.closeModal();
+  }
+
 }
 
