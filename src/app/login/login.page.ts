@@ -11,6 +11,7 @@ import { FormBuilder, Validators} from '@angular/forms';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage implements OnInit {
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     let codigoEnter = 13;
@@ -26,7 +27,6 @@ export class LoginPage implements OnInit {
               private authService: AuthService,
               public router:Router,
               public alertController:AlertController,
-              private auth: AuthService,
               private formBuilder:FormBuilder) { 
                 this.loginForm = this.formBuilder.group({
                   email : ['',[Validators.required,ValidationService.emailValidator]],

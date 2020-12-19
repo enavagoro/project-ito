@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { LoginService } from '../_services/login.service';
 import { Storage } from '@ionic/storage';
-
+import { EnterpriseService } from '../_services/enterprise.service';
 //import { UsuariosService } from '../_servicios/users.service';
 
 @Component({
@@ -18,29 +18,14 @@ export class EnterprisesPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,
               private router: Router,
               private login : LoginService,
+              private enterpriseService: EnterpriseService,
               private storage: Storage) { }
 
   ngOnInit() {
-    this.enterprises = [
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'} //[2]
-    ];
-  }
-
-  ngAfterViewInit(){
     this.storage.get('user').then((val) => {
       console.log('este es el val',val);
       if(val){
+        this.chargeData();
         /*
         this.cargaInicial();
         this.usuario = val;
@@ -57,6 +42,34 @@ export class EnterprisesPage implements OnInit {
       }else{
         this.router.navigate(['/login'], {replaceUrl: true});
       }
+    })
+/*
+    this.enterprises = [
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'} //[2]
+    ];
+    */
+  }
+
+  ngAfterViewInit(){
+
+  }
+
+  chargeData(){
+    this.enterpriseService.list().then(servicio=>{
+      servicio.subscribe(data=>{
+        this.enterprises = data;
+      })
     })
   }
 
@@ -82,7 +95,7 @@ export class EnterprisesPage implements OnInit {
         text: 'Editar',
         icon: 'pencil',
         handler: () => {
-          this.navigateToEnterprise();
+          //this.navigateToEnterprise();
         }
       },{
         text: 'Desactivar',
@@ -103,10 +116,8 @@ export class EnterprisesPage implements OnInit {
   }
 
 
-  navigateToEnterprise(/*form*/){
-    //this.dataStorage.set(form);
+  navigateToEnterprise(){
     this.router.navigateByUrl("enterprises/enterprise");
-    //this.closeModal();
   }
 
   logOut(){

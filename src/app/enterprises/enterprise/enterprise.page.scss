@@ -48,8 +48,10 @@ ion-content{
 }
 
 .title-bar{
-    text-align: center;
+    font-family: 'roboto';
     font-size: 20px;
+    font-weight: 600;
+    text-align: center;
     margin-left: 2%;
 }
 
@@ -80,6 +82,17 @@ ion-item-divider{
     margin-top: 2%;
     border-radius: 0px;
     --background: #f5f7f9;
+}
+
+ion-label{
+    font-family: 'roboto';
+    font-weight: 600;
+}
+
+.list-title{
+    font-family: 'roboto';
+    font-size: 16px;
+    font-weight: 500;
 }
 
 
