@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { LoginService } from '../_services/login.service';
+import { Storage } from '@ionic/storage';
+
+//import { UsuariosService } from '../_servicios/users.service';
 
 @Component({
   selector: 'app-enterprises',
@@ -12,14 +16,48 @@ export class EnterprisesPage implements OnInit {
   listTitleEnterprise = 'Lista de Empresas';
 
   constructor(public actionSheetController: ActionSheetController,
-              private router: Router) { }
+              private router: Router,
+              private login : LoginService,
+              private storage: Storage) { }
 
   ngOnInit() {
     this.enterprises = [
       {nombre:'empresa1',direccion:200343}, //[0]
       {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
+      {nombre:'empresa3',direccion:'estamos'}, //[2]
+      {nombre:'empresa1',direccion:200343}, //[0]
+      {nombre:'empresa2',direccion:5}, //[1]
       {nombre:'empresa3',direccion:'estamos'} //[2]
     ];
+  }
+
+  ngAfterViewInit(){
+    this.storage.get('user').then((val) => {
+      console.log('este es el val',val);
+      if(val){
+        /*
+        this.cargaInicial();
+        this.usuario = val;
+        console.log(val);
+        var permission = this.usuarioService.tienePermiso(val,'ventas');
+        if(permission){
+          this.permission = permission;
+          if(!permission.r){
+            this.storage.clear();
+            this.router.navigate(['/login'], {replaceUrl: true});
+          }
+        }
+        */
+      }else{
+        this.router.navigate(['/login'], {replaceUrl: true});
+      }
+    })
   }
 
   displayEnterpriseOptions(enterprise){
@@ -69,6 +107,13 @@ export class EnterprisesPage implements OnInit {
     //this.dataStorage.set(form);
     this.router.navigateByUrl("enterprises/enterprise");
     //this.closeModal();
+  }
+
+  logOut(){
+    console.log("cerrar sesion");
+    this.storage.clear();
+    console.log(this.storage.get('user'))
+    this.router.navigate(['/login'], {replaceUrl: true});
   }
 
 }

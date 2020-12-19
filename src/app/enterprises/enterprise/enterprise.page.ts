@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./enterprise.page.scss'],
 })
 export class EnterprisePage implements OnInit {
+  title = 'Editar empresa';
 
   constructor() { }
 

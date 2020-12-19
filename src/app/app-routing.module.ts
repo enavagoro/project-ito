@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'enterprises',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
