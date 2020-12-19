@@ -1,9 +1,84 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>enterprise</ion-title>
+  <ion-toolbar class="ion-toolbar">
+    <!--<ion-title></ion-title>-->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="principal-container">
+    <div class="card-enterprise-container">
+      <div class="card-enterprise-form">
+      <!--
+        <div class="circulo">
+          <img class="circle-image" src="">
+        </div>
+      -->
+        <div class="card-enterprise-bar">
+          <ion-item>
+            <ion-avatar class="image-bar">
+              <img src="https://www.flaticon.com/svg/static/icons/svg/3393/3393650.svg">
+            </ion-avatar>
+            <h1 class="title-bar">{{title}}</h1>
+          </ion-item>
+        </div>        
 
+        <div class="card-enterprise-content">
+          <form>  
+            <div class="form-container">
+              <!--
+              <div class="form-bar">
+                <h1 class="bar-title">Datos Persona</h1>
+              </div>
+              -->
+              <div class="form-content">
+                <ion-list-header>
+                  Empresa
+                </ion-list-header>
+
+                <ion-item class="item-form">
+                  <ion-label position="stacked">Rut
+                  <b style="color:red">
+                  </b>
+                  </ion-label>
+                  <ion-input type="text" placeholder="Escriba el rut sin puntos y con guión (11111111-1)" maxlength="10" minlength="9"></ion-input>
+                </ion-item>
+
+                <ion-item class="item-form">
+                  <ion-label position="stacked">Nombre <b style="color:red">
+                  </b></ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+        
+                <ion-item class="item-form">
+                  <ion-label position="stacked">Apellido Paterno <b style="color:red">
+                  </b></ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-enterprise-content">
+          <div class="user-container">
+            <div class="user-content">
+              <ion-list-header>
+                Lista de Usuarios
+              </ion-list-header>
+
+              <ion-item class="item-user">
+                Agregar usuario
+              </ion-item>
+            </div>
+          </div>
+        </div>
+
+        <ion-button class="ion-button">Guardar</ion-button>
+      </div>
+    </div>
+
+    <div class="card-usuario-container">
+
+    </div>
+  </div>
 </ion-content>

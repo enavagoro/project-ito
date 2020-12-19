@@ -1,8 +1,15 @@
 <ion-header>
   <ion-toolbar class="ion-toolbar">    
   </ion-toolbar>
-  <ion-toolbar>
-    aquí van a ir los filtros
+  <ion-toolbar mode="md">
+  <ion-buttons slot="end">
+    <ion-label style="cursor:pointer;" (click)="logOut();">
+      Cerrar Sesión
+    </ion-label>
+    <ion-button (click)="logOut();">
+      <ion-icon class="icono-deseleccionado" color="light" slot="icon-only" name="power"></ion-icon>
+    </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <!--<ion-title>enterprises</ion-title>-->
