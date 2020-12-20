@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { LoginService } from '../_services/login.service';
 import { Storage } from '@ionic/storage';
 import { EnterpriseService } from '../_services/enterprise.service';
+import { DataStorageService } from 'src/app/_services/dataStorage.service';
+
 //import { UsuariosService } from '../_servicios/users.service';
 
 @Component({
@@ -18,10 +21,17 @@ export class EnterprisesPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,
               private router: Router,
               private login : LoginService,
+              public alertController:AlertController,
               private enterpriseService: EnterpriseService,
-              private storage: Storage) { }
+              private dataStorage: DataStorageService,              
+              private storage: Storage) { 
+                this.router.routeReuseStrategy.shouldReuseRoute = function() {
+                  return false;
+              };
+              }
 
   ngOnInit() {
+    console.log('hola');
     this.storage.get('user').then((val) => {
       console.log('este es el val',val);
       if(val){
@@ -43,22 +53,6 @@ export class EnterprisesPage implements OnInit {
         this.router.navigate(['/login'], {replaceUrl: true});
       }
     })
-/*
-    this.enterprises = [
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'}, //[2]
-      {nombre:'empresa1',direccion:200343}, //[0]
-      {nombre:'empresa2',direccion:5}, //[1]
-      {nombre:'empresa3',direccion:'estamos'} //[2]
-    ];
-    */
   }
 
   ngAfterViewInit(){
@@ -67,20 +61,29 @@ export class EnterprisesPage implements OnInit {
 
   chargeData(){
     this.enterpriseService.list().then(servicio=>{
-      servicio.subscribe(data=>{
-        this.enterprises = data;
+      servicio.subscribe(enterprisesData=>{
+        var enterprises = [];
+        enterprisesData.map(data=>{
+          if(data.status==true){
+            enterprises.push(data);
+          }
+        })
+        this.enterprises = enterprises;        
+        console.log('empresas',this.enterprises);
       })
     })
   }
 
-  displayEnterpriseOptions(enterprise){
-    console.log(enterprise);
+  desactivateEnterprise(enterprise){
+    this.enterpriseService.delete(enterprise,enterprise['_id']).subscribe(data=>{
+      this.chargeData();
+      this.deleteAlert();
+    })
   }
 
-  deleteEnterprise(x){
-  }
+  async enterpriseOptions(enterpriseIndex) {
+    var enterprise = this.enterprises[enterpriseIndex];
 
-  async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
       cssClass: 'my-custom-class',
@@ -95,13 +98,14 @@ export class EnterprisesPage implements OnInit {
         text: 'Editar',
         icon: 'pencil',
         handler: () => {
-          //this.navigateToEnterprise();
+          this.dataStorage.set('enterprise',enterprise);
+          this.navigateToEnterprise({status:'update',value:1});
         }
       },{
-        text: 'Desactivar',
+        text: 'Borrar',
         icon: 'trash',
         handler: () => {
-          
+          this.confirmDelete(enterprise);
         }
       },{
         text: 'Cancel',
@@ -115,13 +119,60 @@ export class EnterprisesPage implements OnInit {
     await actionSheet.present();
   }
 
+  async confirmDelete(enterprise) {
+    const alert = await this.alertController.create({
+      header: 'Favor confirmar!',
+      message: '¡Estás a punto de borrar una empresa!',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            //console.log('Cancelado');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.desactivateEnterprise(enterprise);            
+          }
+        }
+      ]
+    });
 
-  navigateToEnterprise(){
+    await alert.present();
+  }
+
+  async deleteAlert() {
+    const alert = await this.alertController.create({
+      header: 'Información',
+      message: '¡Empresa borrada exitosamente!',
+      buttons: [{
+          text: 'Okay',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  ionViewWillEnter(){
+    this.chargeData();
+  }
+
+  navigateToEnterprise(crudStatus){
+    console.log('crudStatus',crudStatus);
+    this.dataStorage.set('crudEnterpriseStatus',crudStatus);
     this.router.navigateByUrl("enterprises/enterprise");
   }
 
   logOut(){
     console.log("cerrar sesion");
+    this.dataStorage.clear();
     this.storage.clear();
     console.log(this.storage.get('user'))
     this.router.navigate(['/login'], {replaceUrl: true});

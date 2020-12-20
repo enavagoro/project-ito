@@ -21,6 +21,7 @@ import { IonicStorageModule } from '@ionic/storage';  //Paquete que guarda data
 import { AuthService } from './_services/auth.service';
 import { LoginService } from './_services/login.service';
 import { ValidationService } from './_services/validation.service';
+import { DataStorageService } from './_services/dataStorage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { ValidationService } from './_services/validation.service';
     SplashScreen,
     AuthService,
     LoginService,
+    DataStorageService,
     ValidationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

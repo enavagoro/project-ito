@@ -69,8 +69,8 @@
             </div>
           </div>
         -->
-        <ion-button class="ion-button" [disabled]="!enterpriseForm.valid" (click)="saveEnterprise()">Guardar</ion-button>
-        <!--<ion-button class="ion-button" [disabled]="!enterpriseForm.valid" (click)="updateEnterprise()">Actualizar</ion-button>-->
+        <ion-button class="ion-button" *ngIf="formValue==0" [disabled]="!enterpriseForm.valid" (click)="saveEnterprise()">Guardar</ion-button>
+        <ion-button class="ion-button" *ngIf="formValue==1" [disabled]="!enterpriseForm.valid" (click)="confirmUpdate()">Actualizar</ion-button>
       </div>
     </div>
 

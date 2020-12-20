@@ -7,7 +7,7 @@
       Cerrar Sesión
     </ion-label>
     <ion-button (click)="logOut();">
-      <ion-icon class="icono-deseleccionado" color="light" slot="icon-only" name="power"></ion-icon>
+      <ion-icon class="icono-deseleccionado" slot="icon-only" name="power"></ion-icon>
     </ion-button>
   </ion-buttons>
   </ion-toolbar>
@@ -19,13 +19,13 @@
     <div class="cards-container">
   
       <div class="card-container">
-        <div class="card" (click)="navigateToEnterprise()">
-            <ion-item>
+        <div class="card" (click)="navigateToEnterprise({status:'create',value:0})">
+            <ion-item class="item-card">
               <h1 class="card-title">Nueva Empresa</h1>
             </ion-item>
             <div class="image-card-container">
               <ion-avatar>
-                <img src="https://www.flaticon.com/svg/static/icons/svg/875/875515.svg">
+                <img class="image-card" src="https://www.flaticon.com/svg/static/icons/svg/875/875515.svg">
               </ion-avatar>
             </div>
             <h1 class="card-title">Agregar Nueva Empresa</h1>
@@ -34,9 +34,9 @@
         </div>
       </div>
 
-      <div class="card-container" *ngFor="let enterprise of enterprises">
-        <div class="card" (click)="presentActionSheet()">
-            <ion-item>
+      <div class="card-container" *ngFor="let enterprise of enterprises; index as i">
+        <div class="card" (click)="enterpriseOptions(i)">
+            <ion-item class="item-card">
               <h1 class="card-title">{{enterprise.name}}</h1>
               <ion-buttons slot="end">
                 <ion-button>
@@ -46,7 +46,7 @@
             </ion-item>
             <div class="image-card-container">
               <ion-avatar>
-                <img src="https://www.flaticon.com/svg/static/icons/svg/3393/3393650.svg">
+                <img class="image-card" src="https://www.flaticon.com/svg/static/icons/svg/3393/3393650.svg">
               </ion-avatar>
             </div>
           <h1 class="card-title">{{enterprise.name}}</h1>
@@ -56,7 +56,7 @@
     </div>
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="navigateToEnterprise({status:'create',value:0})">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
