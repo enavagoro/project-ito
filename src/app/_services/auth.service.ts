@@ -13,7 +13,7 @@ interface auth {
 
 export class AuthService {
 
-  private url: string = "http://201.239.12.238:9090";
+  private url: string = "http://161.35.98.48:5155";
 
   constructor(private http: HttpClient, private login : LoginService) { }
 

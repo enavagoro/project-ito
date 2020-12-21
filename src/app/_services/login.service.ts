@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 export class LoginService {
   private token : string = "";
-  private url: string = "http://201.239.12.238:9090";
+  private url: string = "http://161.35.98.48:5155";
   private empresa : string = "";
   constructor(private router:Router,private storage : Storage,private http:HttpClient) {
     this.storage.get('user').then((val) => {
@@ -25,7 +25,7 @@ export class LoginService {
   
   public getUrl(){
     return new Promise(resolve => {
-      resolve("201.239.12.238:9090");
+      resolve("http://161.35.98.48:5155");
     });
   }
   

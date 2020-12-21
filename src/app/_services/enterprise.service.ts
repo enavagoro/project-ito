@@ -8,7 +8,7 @@ import { LoginService } from './login.service';
 })
 
 export class EnterpriseService {
-  private url: string = "http://201.239.12.238:9090";
+  private url: string = "http://161.35.98.48:5155";
   constructor(private login:LoginService,private http:HttpClient) {
   }
 
